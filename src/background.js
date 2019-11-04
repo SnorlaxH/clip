@@ -1,3 +1,14 @@
+const utils = require('./utils')
 
-alert('Hello world!')
-
+chrome.runtime.onMessage.addListener((args) => {
+    try {
+        chrome.downloads.download({
+            "url": args.url,
+            "filename": args.title + ".mp4",
+            "saveAs": false
+        })
+    }
+    catch (e) {
+        
+    }
+})

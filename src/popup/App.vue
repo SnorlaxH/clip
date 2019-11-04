@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <p>Hello world!</p>
+  <div class="container">
+    <h4 class="center-align">twitch cliper</h4>
+    
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   }
-}
+};
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 p {
   font-size: 20px;
 }

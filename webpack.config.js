@@ -12,6 +12,8 @@ const config = {
   entry: {
     'background': './background.js',
     'popup/popup': './popup/popup.js',
+    'inject': './inject.js',
+    'utils': './utils.js',
   },
   output: {
     path: __dirname + '/dist',
