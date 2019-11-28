@@ -1,15 +1,22 @@
 <template>
-  <div class="container">
-    <h4 class="center-align">twitch cliper</h4>
-    
+  <div>
+    <clip-header></clip-header>
+    <clip-list></clip-list>
   </div>
 </template>
 
 <script>
+import ClipHeader from './components/Header'
+import ClipList from './components/List'
+
 export default {
   data() {
     return {};
-  }
+  },
+  components: {
+    'clip-header': ClipHeader,
+    'clip-list': ClipList,
+  },
 };
 </script>
 

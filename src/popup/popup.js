@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import App from './App'
+import 'expose-loader?$!expose-loader?jQuery!jquery'
+
+import { store } from './store'
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  
-  
-  render: h => h(App)
+    el: '#app',
+    store,
+    render: h => h(App)
 })

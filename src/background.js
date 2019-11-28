@@ -9,6 +9,12 @@ chrome.runtime.onMessage.addListener((args) => {
         })
     }
     catch (e) {
-        
+
+    }
+})
+
+chrome.tabs.onUpdated.addListener((id, info, tab) => {
+    if (info.status === 'complete' && tab.status === 'complete') {
+        chrome.tabs.sendMessage(id, { type: 'initClips', url: info.url !== undefined })
     }
 })

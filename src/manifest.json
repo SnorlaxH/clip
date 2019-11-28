@@ -14,7 +14,7 @@
       "background.js"
     ]
   },
-  "permissions": ["downloads", "https://*.twitch.tv"],
+  "permissions": ["webNavigation", "tabs", "downloads", "https://*.twitch.tv"],
   "content_scripts": [
     {
       "run_at": "document_idle",
