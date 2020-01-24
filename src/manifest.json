@@ -1,31 +1,29 @@
 {
-  "name": "vue-clip",
-  "description": "twitch clip & vod downloader",
-  "version": "0.1.0",
-  "manifest_version": 2,
-  "icons": {
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
-  }, 
-  "author": "snorlaxh",
-  "background": {
-    "persitent": true,
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "permissions": ["webNavigation", "tabs", "downloads", "https://*.twitch.tv"],
-  "content_scripts": [
-    {
-      "run_at": "document_idle",
-      "matches": ["https://*.twitch.tv/*"],
-      "js": ["inject.js"]
-    }
-  ],
-  "browser_action": {
-    "default_title": "Twitch Downloader",
-    "default_popup": "popup/popup.html"
-  },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com/; object-src 'self'",
-  "token": "kx356i9esjnwv91g7brmxay629ugyl"
+    "name": "vue-clip",
+    "description": "twitch clip & vod downloader",
+    "version": "0.1.0",
+    "manifest_version": 2,
+    "icons": {
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+    },
+    "author": "snorlaxh",
+    "background": {
+        "persitent": true,
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "permissions": ["webNavigation", "tabs", "downloads", "storage", "https://*.twitch.tv"],
+    "content_scripts": [{
+        "run_at": "document_idle",
+        "matches": ["https://*.twitch.tv/*"],
+        "js": ["inject.js"]
+    }],
+    "browser_action": {
+        "default_title": "Twitch Downloader",
+        "default_popup": "popup/popup.html"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com/ https://unpkg.com/ https://cdn.jsdelivr.net/ https://static-cdn.jtvnw.net/; object-src 'self'",
+    "token": "kx356i9esjnwv91g7brmxay629ugyl"
 }

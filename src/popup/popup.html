@@ -3,13 +3,18 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chrome-storage-largesync@0.0.4/dist/chrome-Storage-largeSync.min.js"></script>
     <style>
         html {
-            width: 300px;
-            height: 500px;
+            width: 500px;
+            height: 350px;
+        }
+        
+        body {
+            margin: 0;
         }
         
         .toast {
@@ -19,7 +24,7 @@
         }
     </style>
 
-    <title>Title</title>
+    <title>클립북</title>
     <link rel="stylesheet" href="popup.css">
     <% if (NODE_ENV === 'development') { %>
         <!-- Load some resources only in development environment -->

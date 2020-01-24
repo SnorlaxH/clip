@@ -1,34 +1,27 @@
 <template>
-	<div class="row">
-		<div class="col s12">
-			<div class="row" v-show="!isUser" v-cloak>
-				<div class="col s9">
-					<input type="text" placeholder="검색" v-model="searchTxt" v-on:keyup.enter="search()">
-				</div>
-				<div class="col s3">
-					<button class="btn deep-purple lighten-2" v-on:click="search()">
-						<i class="material-icons medium">search</i>
-					</button>
-				</div>
-			</div>
+	<el-row class="search">
+		<el-col :span="24" v-show="!isUser" v-cloak>
+			<el-input type="text" placeholder="검색" v-model="searchTxt" @keyup.native.enter="search()">
+				<el-button slot="append" icon="el-icon-search" v-on:click="search()"></el-button>
+			</el-input>
+		</el-col>
 
-			<div class="card-panel profile-info grey lighten-5 z-depth-1" v-show="isUser" v-cloak>
-				<div class="row valign-wrapper">
-					<div class="col s3 profile-img">
-						<img v-bind:src="user.profile_image_url" class="circle responsive-img">
+		<el-card :span="24" class="profile" bodyStyle="{{padding: '10px'}}" v-show="isUser" v-cloak>
+			<el-row type="flex" justify="space-between" align="middle">
+				<el-col :span="6">
+					<div class="profile-img">
+						<img v-bind:src="user.profile_image_url">
 					</div>
-					<div class="col s7 profile-name">
-						<h6 class="black-text">{{ user.display_name}}</h6>
-					</div>
-					<div class="col s2 profile-close">
-						<a href="#cancel" v-on:click="clear()">
-							<i class="material-icons black-text">close</i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				</el-col>
+				<el-col :span="12">
+					<h4 class="black-text left-align">{{user.display_name}}</h4>
+				</el-col>
+				<el-col :span="4">
+					<el-button v-on:click="clear()" icon="el-icon-close" circle></el-button>
+				</el-col>
+			</el-row>
+		</el-card>
+	</el-row>
 </template>
 
 <script>
@@ -45,7 +38,10 @@ export default {
 			return this.$store.getters.getUser;
 		},
 		isUser() {
-			return this.user.hasOwnProperty("id");
+			return (
+				this.user.hasOwnProperty("id") &&
+				this.mode === Constant.MODE_SEARCH
+			);
 		}
 	},
 	data() {
@@ -64,21 +60,29 @@ export default {
 						classes: "rounded"
 					});
 				} else {
-					this.$store
-						.dispatch(Constant.GET_USER, { data })
-						.then(() => {
-							getList();
-						});
+					this.searchTxt = "";
+					this.$store.dispatch(Constant.GET_USER, {
+						data,
+						init: true
+					});
 				}
 			} else {
 			}
 		},
-		getList() {
-			this.$store.dispatch(Constant.GET_CLIPS, {
-				broadcaster_id: this.user.id
-			});
+		getList(params) {
+			this.$store.dispatch(
+				Constant.GET_CLIPS,
+				Object.assign(
+					{
+						broadcaster_id: this.user.id,
+						first: 100
+					},
+					params
+				)
+			);
 		},
 		clear() {
+			this.searchTxt = "";
 			this.$store.commit(Constant.CLEAR_USER);
 		}
 	}
@@ -86,21 +90,32 @@ export default {
 </script>
 
 <style scoped>
-.row {
-	margin-bottom: 0;
+.search {
+	margin-bottom: 20px;
 }
 
-.card-panel {
-	padding: 10px;
-	margin: 0;
+.profile > div {
+	padding: 10px !important;
 }
 
-.profile-info h6 {
-	margin: 0;
+.profile h4 {
+	font-size: 1.1rem;
 }
 
-.profile-name,
-.profile-close {
-	padding: 0;
+.profile-img {
+	position: relative;
+	display: inline-block;
 }
+
+.profile-img img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+</style>
+
+<style>
+  .profile .el-card__body{
+    padding: 10px;
+  }
 </style>
