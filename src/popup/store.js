@@ -25,6 +25,8 @@ export const store = new Vuex.Store({
         user: {},
         list: [],
         bookmark: [],
+        render: [],
+        searchTxt: '',
         cursor: '',
         version: chrome.runtime.getManifest().version,
     },
@@ -76,6 +78,18 @@ export const store = new Vuex.Store({
                 }
                 idx++;
             });
+        },
+        [Constant.SEARCH_BOOKMARK](state, {data}) {
+            state.searchTxt = data;
+            state.render.splice(0, state.render.length);
+            for(var i = 0 ; i < state.bookmark.length; i++) {
+                if(state.searchTxt.trim().length > 0 && (state.bookmark[i].title.contains(state.searchTxt) || state.bookmark[i].broadcaster_name.contains(state.searchTxt))){
+                    state.render.push(state.bookmark[i]);
+                }
+                else { 
+                    state.render.push(state.bookmark[i]);
+                }
+            }
         }
     },
     actions: {

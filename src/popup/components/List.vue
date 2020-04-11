@@ -41,14 +41,20 @@
 		<el-card class="text-center" v-show="mode == MODE_INFO" v-cloak>
 			<h2>클립북 {{`v${version}`}}</h2>
 			<h4>지원 및 개발자 정보</h4>
-			<el-row type="flex" justify="space-between" align="middle">
-				<el-col :span="6">
-					<el-button class="icon" icon="el-icon-message" circle ></el-button>
+			<el-row class="dev-card" type="flex" justify="space-between" align="middle">
+				<el-col :span="8" class="dev-item">
+					<el-button class="icon dev-button" icon="el-icon-message" circle ></el-button>
+					<h4>Email</h4>
 				</el-col>
-				<el-col>
-					<el-button class="icon" circle  align="middle">
+				<el-col :span="8" class="dev-item">
+					<el-button class="icon dev-button" circle>
 						<img src="/images/github.png"/>
 					</el-button>
+					<h4>Github</h4>
+				</el-col>
+				<el-col :span="8" class="dev-item">
+					<el-button class="icon dev-button" icon="el-icon-edit-outline" circle></el-button>
+					<h4>Blog</h4>
 				</el-col>
 			</el-row>
 		</el-card>
@@ -172,5 +178,19 @@ export default {
 .icon img{
 	width: 26px;
 	height: 26px;
+}
+
+.dev-card{
+	margin-top: 2rem;
+}
+
+.dev-button{
+	width: 40px;
+	height: 40px;
+	font-size: 26px;
+}
+
+.dev-item h4{
+	margin: 0.5rem 0;
 }
 </style>

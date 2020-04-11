@@ -13,4 +13,5 @@ export const Constant = {
     SET_CURSOR: 'setCursor',
     ADD_BOOKMARK: 'addBookmark',
     DEL_BOOKMARK: 'delBookmark',
+    SEARCH_BOOKMARK: 'searchBookmark',
 }

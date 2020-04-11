@@ -51,8 +51,8 @@ export default {
 	},
 	methods: {
 		search() {
+			const data = this.searchTxt;
 			if (this.mode == Constant.MODE_SEARCH) {
-				const data = this.searchTxt;
 				console.log(/[ㄱ-ㅎ가-힣]+/.test(data), data);
 				if (/[ㄱ-ㅎ가-힣]+/.test(data)) {
 					M.toast({
@@ -67,6 +67,7 @@ export default {
 					});
 				}
 			} else {
+				this.$store.commit(Constant.SET_SEARCH, {data});
 			}
 		},
 		getList(params) {
