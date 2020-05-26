@@ -1,5 +1,12 @@
 const utils = require('./utils')
 
+chrome.browserAction.onClicked.addListener((tab) => {
+    window.a = 'clicked!'
+    chrome.tabs.create({
+        url: chrome.runtime.getURL('popup/popup.html')
+    })
+})
+
 chrome.runtime.onMessage.addListener((args) => {
     try {
         chrome.downloads.download({

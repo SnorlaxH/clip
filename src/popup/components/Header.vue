@@ -46,11 +46,15 @@ export default {
 
 <style scoped>
 .el-aside {
-	max-width: 150px;
+	width: 20%!important;
 }
 
 .el-menu {
 	height: 100%;
+}
+
+.el-menu-item{
+	font-size: 1rem;
 }
 
 .el-menu-item:focus,

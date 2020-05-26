@@ -4,3 +4,4 @@
 /dist-zip
 .DS_Store
 resume.md
+package-lock.json

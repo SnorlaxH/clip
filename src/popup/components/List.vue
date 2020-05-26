@@ -1,7 +1,11 @@
 <template>
-	<el-main>
+	<el-main
+			:span="14" 
+			v-infinite-scroll="more"
+			infinite-scroll-disabled="busy"
+			infinite-scroll-distance="10">
 		<clip-search v-show="mode != MODE_INFO" v-cloak></clip-search>
-		<el-card v-show="list.length == 0 && mode != MODE_INFO" v-cloak shadow="always">
+		<el-card class="card-empty" v-show="list.length == 0 && mode != MODE_INFO" v-cloak shadow="always">
 			<div class="text-center" v-show="mode == MODE_BOOKMARK" v-cloak>등록된 북마크가 없습니다.</div>
 			<div class="text-center" v-show="mode == MODE_SEARCH" v-cloak>
 				스트리머의 영문 채널명을 입력하세요.
@@ -9,7 +13,7 @@
 			</div>
 		</el-card>
 		<el-card
-			v-for="r in list"
+			v-for="r in render"
 			v-bind:key="r.id"
 			shadow="always"
 			bodyStyle="{{padding: '10px'}}"
@@ -99,7 +103,30 @@ export default {
 		"clip-search": ClipSearch
 	},
 	data() {
-		return {};
+		return {
+			busy: false,
+			page: 1,
+			maxPage: 1,
+			render: [],
+		};
+	},
+	mounted() {
+		if(this.mode == this.MODE_SEARCH) {
+			var cnt = 100;
+			maxPage = Math.floor(this.list.length / cnt) + (this.list.length % cnt ? 1 : 0);
+
+console.log(this.list);
+
+			if(maxPage > page) {
+				this.render.concat(this.list.slice((page - 1) * cnt, (page * cnt) - 1));
+			}
+			else {
+				this.more();
+			}
+		}
+		else {
+			this.render = this.list.slice(0);
+		}
 	},
 	methods: {
 		go(url) {
@@ -132,7 +159,24 @@ export default {
 				}
 			});
 			return arr.includes(id);
-		}
+		},
+		more(after) {
+			if(this.mode == this.MODE_SEARCH) {
+				this.busy = true;
+				if(this.user.hasOwnProperty('id') && this.user.id.length > 0) {
+					this.$store.dispatch(
+						Constant.GET_CLIPS,
+						{
+							broadcaster_id: this.user.id,
+							first: 100,
+							after,
+						}
+					).then(()=>{
+						this.busy = false;
+					});
+				}
+			}
+		},
 	}
 };
 </script>
@@ -192,5 +236,13 @@ export default {
 
 .dev-item h4{
 	margin: 0.5rem 0;
+}
+
+.card-empty {
+	display: flex;
+	min-height: 150px;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 1.1rem;
 }
 </style>

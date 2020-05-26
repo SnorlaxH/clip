@@ -16,7 +16,7 @@ export default {
 	},
 	created() {
 		chrome.storage.largeSync.get(
-			["mode", "user", "list", "bookmark", "cursor"],
+			["mode", "user", "bookmark", "cursor"],
 			data => {
 				this.$store.commit(Constant.INIT_DATA, { data });
 			}
@@ -31,7 +31,7 @@ export default {
 
 <style scoped>
 .el-container {
-	width: 500px;
-	height: 350px;
+	width: 100%;
+	height: 100%;
 }
 </style>

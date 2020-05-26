@@ -76,6 +76,7 @@ const config = {
             { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
             { from: 'images', to: 'images' },
             { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
+            { from: './background.html', to: './background.html', transform: transformHtml },
             {
                 from: 'manifest.json',
                 to: 'manifest.json',

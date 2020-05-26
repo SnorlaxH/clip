@@ -10,7 +10,6 @@ const plugin = store => {
         chrome.storage.largeSync.set({
             mode: state.mode,
             user: state.user,
-            list: state.list,
             bookmark: state.bookmark,
             cursor: state.cursor,
         }, () => {
@@ -115,12 +114,18 @@ export const store = new Vuex.Store({
                 })
             })
         },
-        [Constant.GET_CLIPS]({ state, commit }, { data }) {
-            api.getList({
+        [Constant.GET_CLIPS]({ state, commit }, { data, after }) {
+            const params = {
                 broadcaster_id: state.user.id,
                 first: 100,
-                data
-            }).then((r) => {
+                data,
+            };
+
+            if(after && state.cursor.length > 0) {
+                params.after = state.cursor;
+            }
+
+            api.getList(params).then((r) => {
                 if (r.data.data.length > 0) {
                     const arr = [];
                     r.data.data.forEach(item => {

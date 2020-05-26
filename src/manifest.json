@@ -10,19 +10,16 @@
     "author": "snorlaxh",
     "background": {
         "persitent": true,
-        "scripts": [
-            "background.js"
-        ]
+        "page": "background.html"
     },
-    "permissions": ["webNavigation", "tabs", "downloads", "storage", "https://*.twitch.tv"],
+    "permissions": ["tabs", "downloads", "storage", "unlimitedStorage", "*://*.twitch.tv"],
     "content_scripts": [{
         "run_at": "document_idle",
-        "matches": ["https://*.twitch.tv/*"],
+        "matches": ["*://*.twitch.tv/*"],
         "js": ["inject.js"]
     }],
     "browser_action": {
-        "default_title": "Twitch Downloader",
-        "default_popup": "popup/popup.html"
+        "default_title": "Twitch Downloader"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com/ https://unpkg.com/ https://cdn.jsdelivr.net/ https://static-cdn.jtvnw.net/; object-src 'self'",
     "token": "kx356i9esjnwv91g7brmxay629ugyl"

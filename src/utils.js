@@ -20,6 +20,7 @@ String.prototype.fmt = function () {
 const MODE_SINGLE = 1
 const MODE_SINGLE_WITH_LIST = 2
 const MODE_LIST = 3
+const CL_CARD = 'article'
 
 const getMode = () => {
     const host = window.location.hostname
@@ -58,11 +59,11 @@ const getTitle = (obj) => {
             }
             // bottom list
             else {
-                title = $(obj).closest('.preview-card').find('.preview-card__titles-wrapper h3.tw-ellipsis').attr('title')
+                title = $(obj).closest(CL_CARD).find('a.tw-link h3.tw-ellipsis').attr('title')
             }
         }
         else if (mode == MODE_LIST) {
-            title = $(obj).closest('.preview-card').find('.preview-card__titles-wrapper h3.tw-ellipsis').attr('title')
+            title = $(obj).closest(CL_CARD).find('a.tw-link h3.tw-ellipsis').attr('title')
         }
     }
 
@@ -83,14 +84,15 @@ const getUrl = (obj) => {
             }
             // bottom list
             else {
-                let src = $(obj).closest('.preview-card').find('img.tw-image').attr('src').split('/')
+                let src = $(obj).closest(CL_CARD).find('[data-a-target="preview-card-image-link"] img.tw-image').attr('src').split('/')
                 let img = src[src.length - 1]
 
                 url = 'https://clips-media-assets2.twitch.tv/{0}.mp4'.fmt(img.substring(0, img.indexOf('-preview')))
             }
         }
         else if (mode == MODE_LIST) {
-            let src = $(obj).closest('.preview-card').find('img.tw-image').attr('src').split('/')
+            let src = $(obj).closest(CL_CARD).find('[data-a-target="preview-card-image-link"] img.tw-image').attr('src').split('/')
+            window.a = $(obj)
             let img = src[src.length - 1]
 
             url = 'https://clips-media-assets2.twitch.tv/{0}.mp4'.fmt(img.substring(0, img.indexOf('-preview')))
@@ -105,6 +107,8 @@ const utils = {
     dl: (obj) => {
         const url = getUrl(obj)
         const title = getTitle(obj)
+
+        console.log(url, title)
 
         chrome.runtime.sendMessage({
             url,
