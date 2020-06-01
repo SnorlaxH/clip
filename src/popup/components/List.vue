@@ -1,9 +1,6 @@
 <template>
 	<el-main
-			:span="14" 
-			v-infinite-scroll="more"
-			infinite-scroll-disabled="busy"
-			infinite-scroll-distance="10">
+			:span="14">
 		<clip-search v-show="mode != MODE_INFO" v-cloak></clip-search>
 		<el-card class="card-empty" v-show="list.length == 0 && mode != MODE_INFO" v-cloak shadow="always">
 			<div class="text-center" v-show="mode == MODE_BOOKMARK" v-cloak>등록된 북마크가 없습니다.</div>
@@ -42,6 +39,15 @@
 				</el-col>
 			</el-row>
 		</el-card>
+		<el-pagination
+			background
+			layout="prev, next"
+			:page-size="pageSize"
+			prev-click="move(false)"
+			next-click="move(true)"
+			v-show="mode != MODE_INFO"
+			v-cloak>
+		</el-pagination>
 		<el-card class="text-center" v-show="mode == MODE_INFO" v-cloak>
 			<h2>클립북 {{`v${version}`}}</h2>
 			<h4>지원 및 개발자 정보</h4>
@@ -104,18 +110,16 @@ export default {
 	},
 	data() {
 		return {
-			busy: false,
 			page: 1,
+			pageSize: 100,
 			maxPage: 1,
 			render: [],
 		};
 	},
 	mounted() {
 		if(this.mode == this.MODE_SEARCH) {
-			var cnt = 100;
+			var cnt = this.pageSize;
 			maxPage = Math.floor(this.list.length / cnt) + (this.list.length % cnt ? 1 : 0);
-
-console.log(this.list);
 
 			if(maxPage > page) {
 				this.render.concat(this.list.slice((page - 1) * cnt, (page * cnt) - 1));
