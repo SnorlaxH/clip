@@ -8,16 +8,16 @@
 
 		<el-card :span="24" class="profile" bodyStyle="{{padding: '10px'}}" v-show="isUser" v-cloak>
 			<el-row type="flex" justify="space-between" align="middle">
-				<el-col :span="6">
+				<el-col :span="4">
 					<div class="profile-img">
 						<img v-bind:src="user.profile_image_url">
 					</div>
 				</el-col>
-				<el-col :span="12">
-					<h4 class="black-text left-align">{{user.display_name}}</h4>
+				<el-col :span="16">
+					<h4 class="profile-title black-text left-align">{{user.display_name}}</h4>
 				</el-col>
-				<el-col :span="4">
-					<el-button v-on:click="clear()" icon="el-icon-close" circle></el-button>
+				<el-col :span="4" class="profile-close">
+					<el-button class="close-button" v-on:click="clear()" icon="el-icon-close" circle></el-button>
 				</el-col>
 			</el-row>
 		</el-card>
@@ -70,18 +70,6 @@ export default {
 				this.$store.commit(Constant.SET_SEARCH, {data});
 			}
 		},
-		getList(params) {
-			this.$store.dispatch(
-				Constant.GET_CLIPS,
-				Object.assign(
-					{
-						broadcaster_id: this.user.id,
-						first: 100
-					},
-					params
-				)
-			);
-		},
 		clear() {
 			this.searchTxt = "";
 			this.$store.commit(Constant.CLEAR_USER);
@@ -95,23 +83,34 @@ export default {
 	margin-bottom: 20px;
 }
 
-.profile > div {
-	padding: 10px !important;
-}
-
 .profile h4 {
 	font-size: 1.1rem;
 }
 
 .profile-img {
 	position: relative;
-	display: inline-block;
+	display: flex;
+	justify-content: center;
 }
 
 .profile-img img {
 	width: 100%;
 	height: 100%;
+	max-width: 75px;
 	border-radius: 50%;
+}
+
+.profile-title {
+	padding: 0 1rem;
+}
+
+.profile-close {
+	display: flex;
+	justify-content: center;
+}
+
+.close-button{
+	float: right;
 }
 </style>
 

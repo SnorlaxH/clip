@@ -1,15 +1,7 @@
 <html>
 
 <head>
-    <script>
-        window.onload(ev => {
-            location.replace(`https://id.twitch.tv/oauth2/authorize
-            ?client_id=${chrome.runtime.getManifest().token}
-            &redirect_uri=${chrome.runtime.getURL('access_token.html')}
-            &response_type=force_verify
-            &scope`)
-        })
-    </script>
+    <script src="auth.js"></script>
 </head>
 
 </html>

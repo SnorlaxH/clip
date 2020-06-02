@@ -16,7 +16,7 @@ export default {
 	},
 	created() {
 		chrome.storage.largeSync.get(
-			["mode", "user", "bookmark", "cursor"],
+			["mode", "bookmark", "cursor"],
 			data => {
 				this.$store.commit(Constant.INIT_DATA, { data });
 			}

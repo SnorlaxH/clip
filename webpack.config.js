@@ -11,6 +11,7 @@ const config = {
     context: __dirname + '/src',
     entry: {
         'background': './background.js',
+        'popup/auth': './popup/auth.js',
         'popup/popup': './popup/popup.js',
         'inject': './inject.js',
         'utils': './utils.js',
@@ -75,6 +76,8 @@ const config = {
         new CopyWebpackPlugin([
             { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
             { from: 'images', to: 'images' },
+            { from: 'popup/auth.html', to: 'popup/auth.html', transform: transformHtml },
+            { from: 'popup/access_token.html', to: 'popup/access_token.html', transform: transformHtml },
             { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
             { from: './background.html', to: './background.html', transform: transformHtml },
             {

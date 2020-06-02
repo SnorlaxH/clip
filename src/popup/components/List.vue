@@ -10,7 +10,7 @@
 			</div>
 		</el-card>
 		<el-card
-			v-for="r in render"
+			v-for="r in list"
 			v-bind:key="r.id"
 			shadow="always"
 			bodyStyle="{{padding: '10px'}}"
@@ -18,23 +18,26 @@
 			v-cloak
 		>
 			<el-row type="flex" justify="space-between" align="middle">
-				<el-col :span="12">
+				<el-col :span="6">
 					<el-image v-bind:src="r.thumbnail_url" :fit="fill"></el-image>
 				</el-col>
-				<el-col :span="10">
-					<el-col :span="24" class="title" v-bind:title="r.title">{{ r.title }}</el-col>
-					<el-col :span="24" class="info">{{ `${r.broadcaster_name} (${r.broadcaster_login})` }}</el-col>
+				<el-col :span="18" class="item">
+					<el-col :span="24" class="title" v-bind:title="r.title">
+						<a target="_blank" v-bind:href="r.url">{{ r.title }}</a>
+					</el-col>
+					<el-col :span="24" class="info">
+						<a target="_blank" v-bind:href="`https://twitch.tv/${r.broadcaster_login}/clips`" >{{ `${r.broadcaster_name} (${r.broadcaster_login})` }}</a>
+					</el-col>
 					<el-col :span="24" class="btns">
 						<el-button
+							class="btns-icon"
 							icon="el-icon-star-off"
 							circle
 							v-bind:type="isMarked(r.id) ? 'warning' : 'default'"
 							v-on:click="mark(r)"
 						></el-button>
 
-						<el-button icon="el-icon-link" circle v-on:click="go(r.url)"></el-button>
-
-						<el-button icon="el-icon-download" circle v-on:click="download(r)"></el-button>
+						<el-button class="btns-icon" icon="el-icon-download" circle v-on:click="download(r)"></el-button>
 					</el-col>
 				</el-col>
 			</el-row>
@@ -45,7 +48,7 @@
 			:page-size="pageSize"
 			prev-click="move(false)"
 			next-click="move(true)"
-			v-show="mode != MODE_INFO"
+			v-show="mode != MODE_INFO && list.length > 0"
 			v-cloak>
 		</el-pagination>
 		<el-card class="text-center" v-show="mode == MODE_INFO" v-cloak>
@@ -113,24 +116,9 @@ export default {
 			page: 1,
 			pageSize: 100,
 			maxPage: 1,
-			render: [],
+			isInit: true,
+			unwatch: {},
 		};
-	},
-	mounted() {
-		if(this.mode == this.MODE_SEARCH) {
-			var cnt = this.pageSize;
-			maxPage = Math.floor(this.list.length / cnt) + (this.list.length % cnt ? 1 : 0);
-
-			if(maxPage > page) {
-				this.render.concat(this.list.slice((page - 1) * cnt, (page * cnt) - 1));
-			}
-			else {
-				this.more();
-			}
-		}
-		else {
-			this.render = this.list.slice(0);
-		}
 	},
 	methods: {
 		go(url) {
@@ -198,8 +186,22 @@ export default {
 	margin-left: 5px;
 }
 
+.item{
+	padding: 0 1.5rem;
+}
+
+.item a{
+	color: #000;
+	text-decoration: unset;
+}
+
+.item a:visited{
+	color: #000;
+	text-decoration: unset;
+}
+
 .title {
-	font-size: 14px;
+	font-size: 1.2rem;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -207,19 +209,29 @@ export default {
 }
 
 .info {
-	font-size: 12px;
+	font-size: 1rem;
 }
 
 .btns {
 	text-align: right;
-	margin-top: 20px;
+	margin-top: 1.2rem;
+}
+
+.btns-icon {
+	font-size: 1.3rem;
+}
+
+.el-pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 1.5rem;
 }
 
 .text-center{
 	text-align: center;
 }
 
-.icon [class*=" el-icon-"], [class^=el-icon-]{
+.icon [class*=" el-icon-"], .icon [class^=el-icon-]{
 	font-size: 26px;
 }
 

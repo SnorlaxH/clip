@@ -9,7 +9,6 @@ const plugin = store => {
     store.subscribe((mutation, state) => {
         chrome.storage.largeSync.set({
             mode: state.mode,
-            user: state.user,
             bookmark: state.bookmark,
             cursor: state.cursor,
         }, () => {
@@ -51,7 +50,7 @@ export const store = new Vuex.Store({
             Object.assign(state, data);
         },
         [Constant.GET_CLIPS](state, { data }) {
-            state.list = state.list.concat(data);
+            state.list = data;
         },
         [Constant.CHANGE_MODE](state, { data }) {
             state.mode = data
